@@ -3,6 +3,7 @@ const app = express()
 const port = 7070;
 app.use(express.json());
 const fruitRoutes = require ('./Routes/fruitRoutes.js')
+const userRoutes = require ('./Routes/userRoutes.js')
 
 app.use((request,response,next) => {
     console.log('------------------------------------------')
@@ -59,6 +60,8 @@ app.post('/item/:id', (request, response) => {
 
 // For Fruits
 app.use ('/fruits', fruitRoutes)
+// For user
+app.use('/user', userRoutes)
 
 app.listen(port, () => {
     console.log(`App started and listening on port: ${port}`)
