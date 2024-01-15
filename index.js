@@ -1,22 +1,15 @@
 const express = require('express')
 const app = express()
-const port = 3000;
+const port = 7070;
 app.use(express.json());
+const fruitRoutes = require ('./Routes/fruitRoutes.js')
 
-const fruits = [
-    {
-        id: 1,
-        name: "banana"
-    },
-    {
-        id: 2,
-        name: "apple"
-    },
-    {
-        id: 300,
-        name: "mango"
-    }
-]
+app.use((request,response,next) => {
+    console.log('------------------------------------------')
+    console.log('----This runs for every single request----');
+    console.log('------------------------------------------')
+    next();
+})
 
 
 // Read
@@ -65,66 +58,8 @@ app.post('/item/:id', (request, response) => {
 })
 
 // For Fruits
-
-//Read operations
-app.get('/fruits', (request, response) => {
-    response.json(fruits)
-})
-
-app.get('/fruits/:id', (request, response) => {
-    for (let fruit of fruits) {
-        if (fruit.id == request.params.id) {
-            response.status(200)
-            return response.send(fruit)
-        }
-    }
-    response.status(404)
-    response.send("Fruit not found !")
-})
-
-//Create operation
-app.post('/fruits', (request, response) => {
-    if (fruits.length > 0 && fruits.some((f) => f.name == request.body.name)) {
-        response.status(409);
-        return response.send("Fruite already exists")
-    }
-    let index = fruits[fruits.length -1].id + 1;
-    const newFruit = {
-        id: index,
-        name: request.body.name
-    }
-    fruits.push(newFruit)
-    response.send(newFruit)
-})
-
-//Update operation
-app.put('/fruits/:id', (request, response) => {
-    for (let fruit of fruits) {
-        if (fruit.id == request.params.id) {
-            fruit.name = request.body.name;
-            response.status(200);
-            return response.send("Fruit updated successfully !")
-        }
-    }
-    response.status(404);
-    response.send("Fruit not found")
-});
-
-//Delete operation 
-app.delete('/fruits/:id', (request, response) => {
-for (let fruit of fruits) {
-    if (fruit.id == request.params.id) {
-        const bye = fruits.indexOf(fruit);
-        fruits.splice(bye,1);
-        response.status(200);
-        return response.send ("Fruit was deleted")
-    }
-}
-response.status(404);
-response.send("Fruit not found to be deleted")
-});
-
+app.use ('/fruits', fruitRoutes)
 
 app.listen(port, () => {
-    console.log(`App startd and listening on port: ${port}`)
+    console.log(`App started and listening on port: ${port}`)
 });
