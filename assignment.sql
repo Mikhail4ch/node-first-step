@@ -29,8 +29,8 @@ INSERT INTO countries(id,name_) VALUES(3, Finland);
 
 CREATE TABLE addresses (
 id integer NOT null,
-user_id text UNIQUE,
-country_id text UNIQUE,
+user_id I integer,
+country_id integer,
 PRIMARY KEY(id),
 FOREIGN KEY (user_id) REFERENCES users(id),
 FOREIGN KEY (country_id) REFERENCES countries(id)
