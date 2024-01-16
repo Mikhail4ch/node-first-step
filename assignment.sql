@@ -1,0 +1,54 @@
+
+// tables creation and insertion
+
+CREATE TABLE users (
+id integer NOT null,
+username VARCHAR(255) NOT NULL,
+password_ VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL,
+firstName text DEFAULT NOT NULL,
+lastName text DEFAULT NOT NULL,
+PRIMARY KEY(id)
+); 
+
+INSERT INTO users(id, username, password_, email, firstName, lastName)
+VALUES (1, "Goose", 1234, "coolgoose@gmail.com", "John", "Cena" );
+
+INSERT INTO users(id, username, password_, email, firstName, lastName)
+VALUES (2, "capybara", 4321, "coolcapybara@gmail.com", "Ryan", "Gosling" );
+
+CREATE TABLE countries (
+id integer NOT null,
+name_ VARCHAR(255) NOT NULL,
+PRIMARY KEY(id)
+); 
+
+INSERT INTO countries(id,name_) VALUES(1, Norway);
+INSERT INTO countries(id,name_) VALUES(2, Sweden);
+INSERT INTO countries(id,name_) VALUES(3, Finland);
+
+CREATE TABLE addresses (
+id integer NOT null,
+user_id text UNIQUE,
+country_id text UNIQUE,
+PRIMARY KEY(id),
+FOREIGN KEY (user_id) REFERENCES users(id),
+FOREIGN KEY (country_id) REFERENCES countries(id)
+); 
+
+INSERT INTO addresses(id, user_id, country_id) VALUES(1, 1, 1);
+INSERT INTO addresses(id, user_id, country_id) VALUES(2, 2, 1);
+INSERT INTO addresses(id, user_id, country_id) VALUES(3, 2, 3);
+
+// queries 
+
+SELECT * FROM countries;
+
+SELECT email FROM users;
+
+SELECT firstName FROM users WHERE firstName LIKE '%e%';
+
+SELECT countries.name_ FROM countries
+JOIN addresses ON addresses.country_id = countries.id
+WHERE addresses.user_id = 2
+
