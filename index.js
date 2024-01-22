@@ -1,68 +1,47 @@
-const express = require('express')
-const app = express()
-const port = 7070;
-app.use(express.json());
-const fruitRoutes = require ('./Routes/fruitRoutes.js')
-const userRoutes = require ('./Routes/userRoutes.js')
+const {sequelize, testConnection} = require('./utils/connection')
+const Category = require('./models/categoryModel')
+const Item = require('./models/itemModel')
 
-app.use((request,response,next) => {
-    console.log('------------------------------------------')
-    console.log('----This runs for every single request----');
-    console.log('------------------------------------------')
-    next();
-})
+testConnection();
 
+//Retreive Categories
+const findCategories = async() => {
+    const result = await Category.findAll()
+    console.log(JSON.stringify(result))
+}
 
-// Read
-app.get('/', (request, response) => {
-    response.send('Hello World!')
-});
+const findCategoriesByName = async() => {
+    const result = await Category.findAll({where: {name: "fruits"}});
+    console.log(JSON.stringify(result))
+}
 
-app.get('/hello', (request, response) => {
-    response.send('Hello World!')
-});
+// Reterive Items 
+const findItems = async() => {
+    const result = await Item.findAll();
+    console.log(JSON.stringify(result))
+}
 
-app.get('/welcome', (request, response) => {
-    response.send('Welcome Back!')
-});
+const findItemsWithCategories = async() => {
+    const result = await Item.findAll({include: Category});
+    console.log(JSON.stringify(result));
+}
 
-// Create
-app.post('/login', (request, response) => {
-    response.send('Logged In Successfully!')
-})
+const createNewCategory = async() => {
+    await Category.create({
+        name: "meat"
+    });
+    findCategories();
+}
 
-// Update
-app.put('/cart', (request, response) => {
-    response.send('Item added to cart!')
-})
+// Update Category
+const updateCategory = async() => {
+    await Category.update({name: "meats"}, {where: {id: 9}})
+    findCategories();
+}
 
+const deleteCategory = async() => {
+    await Category.destroy({where: {id: 3}})
+    findCategories();
+}
 
-app.get('/items',  (request, response) => {
-    response.send('List of Items!')
-})
-
-// Delete
-app.delete('/item/:id', (request, response) => {
-    response.send('Item deleted from the cart!')
-})
-
-app.get('/item/:id', (request, response) => {
-    response.send(`Returns Item with id: ${request.params.id} !`)
-})
-
-app.put('/item/:id', (request, response) => {
-    response.send(`Item with id: ${request.params.id} updated !`)
-})
-
-app.post('/item/:id', (request, response) => {
-    response.send(`Item with id: ${request.params.id} created !`)
-})
-
-// For Fruits
-app.use ('/fruits', fruitRoutes)
-// For user
-app.use('/user', userRoutes)
-
-app.listen(port, () => {
-    console.log(`App started and listening on port: ${port}`)
-});
+deleteCategory()
