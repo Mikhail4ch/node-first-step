@@ -9,7 +9,7 @@ exports.getAllCategories = async (req, response) => {
 exports.getCategoryById = async(request, response) => {
     let categoryId = request.params.id;
     const result = await Category.findByPk(categoryId)
-    if (result != null) {
+    if (result != null && result.length > 0) {
         return response.json(result)
     }
     
@@ -41,7 +41,7 @@ exports.addNewCategory = async (request, response) => {
 exports.updateCategoryById = async (request, response) => {
     let categoryId = request.params.id
     const result = await Category.findByPk(categoryId)
-    if (result != null) {
+    if (result != null && result.length > 0) {
         await Category.update({name: request.body.name}, {where: {id: categoryId}})
         return response.json(result)
     }
@@ -66,7 +66,8 @@ exports.getCategoryAllItems = async (request, response) => {
     let categoryId = request.params.id 
     const result = await Item.findAll({
         where: { category_id: categoryId}})
-    if (result != null) {
+    
+        if (result != null && result.length > 0) {
         return response.json(result)
     }
     response.status(404)
