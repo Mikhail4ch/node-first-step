@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express()
 const port = 7070;
+const cors = require('cors')
 app.use(express.json());
-const fruitRoutes = require ('./Routes/fruitRoutes.js')
-const userRoutes = require ('./Routes/userRoutes.js')
+app.use(cors());
+const fruitRoutes = require ('./Routes/fruitRoutes.js');
+const userRoutes = require ('./Routes/userRoutes.js');
 const categoryRoutes = require('./Routes/categoryRoutes');
 const itemRoutes = require('./Routes/itemRoutes');
+const { addNewItem } = require('./Controllers/itemController.js');
 
 app.use((request,response,next) => {
     console.log('------------------------------------------')

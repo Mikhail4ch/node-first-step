@@ -9,7 +9,7 @@ exports.getAllItems = async (req, response) => {
 exports.getItemById = async(request, response) => {
     let ItemId = request.params.id;
     const result = await Item.findByPk(ItemId)
-    if (result != null && result.length > 0) {
+    if (result != null) {
         return response.json(result)
     }
     
@@ -35,7 +35,7 @@ exports.addNewItem = async (request, response) => {
 exports.updateItemById = async (request, response) => {
     let itemId = request.params.id
     const result = await Item.findByPk(itemId)
-    if (result != null && result.length > 0) {
+    if (result != null ) {
         await Item.update({name: request.body.name, price: request.body.price, 
         description: request.body.description, category_id: request.body.category_id}, {where: {id: itemId}})
         return response.json(result)
@@ -47,7 +47,7 @@ exports.updateItemById = async (request, response) => {
 exports.deleteItemById = async (request, response) => {
     let itemId = request.params.id
     const result = await Item.findByPk(itemId)
-    if (result != null && result.length > 0) {
+    if (result != null ) {
         await Item.destroy({where: {id: itemId}})
         return response.json(result)
     }

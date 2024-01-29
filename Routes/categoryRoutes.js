@@ -23,7 +23,7 @@ router.post('/', routeMiddleWare, categoryController.addNewCategory)
 router.put('/:id', routeMiddleWare, categoryController.updateCategoryById);
 
 //Delete operation
-router.delete('/:id', routeMiddleWare, categoryController.deleteCategoryById);
+router.delete('/:id', categoryController.deleteCategoryById);
 
 router.get('/:id/items', categoryController.getCategoryAllItems)
 
