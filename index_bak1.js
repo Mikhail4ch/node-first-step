@@ -90,7 +90,6 @@ const updateItems = async () => {
     await Item.update({ price: 120.99 }, { where: { category_id: 3} })
     findItems();
 }
-findItems()
 
 //5
 const expensiveItems = async () => {

@@ -17,10 +17,10 @@ router.get('/', categoryController.getAllCategories)
 router.get('/:id', categoryController.getCategoryById)
 
 //Create operation
-router.post('/', routeMiddleWare, categoryController.addNewCategory)
+router.post('/',categoryController.addNewCategory)
 
 //Update operation
-router.put('/:id', routeMiddleWare, categoryController.updateCategoryById);
+router.put('/:id', categoryController.updateCategoryById);
 
 //Delete operation
 router.delete('/:id', categoryController.deleteCategoryById);

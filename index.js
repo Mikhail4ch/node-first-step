@@ -5,7 +5,7 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cors());
 const fruitRoutes = require ('./Routes/fruitRoutes.js');
-const userRoutes = require ('./Routes/userRoutes.js');
+const usersRoutes = require ('./Routes/usersRoutes.js');
 const categoryRoutes = require('./Routes/categoryRoutes');
 const itemRoutes = require('./Routes/itemRoutes');
 const { addNewItem } = require('./Controllers/itemController.js');
@@ -67,7 +67,7 @@ app.post('/item/:id', (request, response) => {
 app.use ('/fruits', fruitRoutes)
 
 // For user
-app.use('/user', userRoutes)
+app.use('/user', usersRoutes)
 
 // For Categoies
 app.use('/categories', categoryRoutes)

@@ -18,7 +18,7 @@ router.get('/', itemController.getAllItems)
 router.get('/:id', itemController.getItemById)
 
 //Create operation
-router.post('/', routeMiddleWare, itemController.addNewItem)
+router.post('/',itemController.addNewItem)
 
 //Update operation
 router.put('/:id', routeMiddleWare, itemController.updateItemById);
