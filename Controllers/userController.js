@@ -8,7 +8,7 @@ exports.getFunction = async (request, response) => {
 }
 
 exports.registerFunction = async (request, response) => {
-    const hashedPassword = bcrypt.hash(request.body.password, 10);
+    const hashedPassword = await bcrypt.hash(request.body.password, 10);
     if (!request.body.email ||
         !request.body.password) {
         response.status(400)
@@ -21,16 +21,13 @@ exports.registerFunction = async (request, response) => {
     response.send(result)
 }
 
-exports.loginFunction = (request, response) => {
-
-    for (let user of Users) {
-        if (user.email == request.body.email && bcrypt.compare(request.body.password, user.password)) {
-            const token = jwt.sign({ id: user.id, email: user.email }, 'my-secret-key', { expiresIn: '10h' });
-            res.status(200).send({ token });
-        }
+exports.loginFunction = async (request, response) => {
+    const result = await Users.findAll({ where: { email: request.body.email } });
+    if (result != null && result.length > 0 && bcrypt.compare(request.body.password, result.password)) { 
+        const token = jwt.sign({ id: result.id, email: result.email }, 'my-secret-key', { expiresIn: '10h' });
+        response.status(200)
+    return response.send(token)
     }
-    response.status(404);
-    response.send("Login failed")
+    response.status(404)
+    response.send("Account doesn't exist !")
 }
-
-
