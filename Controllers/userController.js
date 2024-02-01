@@ -8,12 +8,15 @@ exports.getFunction = async (request, response) => {
 }
 
 exports.registerFunction = async (request, response) => {
-    const hashedPassword = await bcrypt.hash(request.body.password, 10);
+    
     if (!request.body.email ||
         !request.body.password) {
         response.status(400)
         return response.send("Bad request")
     }
+    
+    const hashedPassword = await bcrypt.hash(request.body.password, 10);
+   
     const result = await Users.create({
         email: request.body.email,
         password: hashedPassword
@@ -23,6 +26,12 @@ exports.registerFunction = async (request, response) => {
 
 exports.loginFunction = async (request, response) => {
     
+    if (!request.body.email ||
+        !request.body.password) {
+        response.status(400)
+        return response.send("Bad request")
+    }
+    
     const result = await Users.findAll({ where: { email: request.body.email } });
 
     if (result != null && result.length > 0 && await bcrypt.compare(String(request.body.password), String(result.password))) { 
@@ -31,5 +40,5 @@ exports.loginFunction = async (request, response) => {
     return response.send(token)
     }
     response.status(404)
-    response.send(result)
+    response.send("Incorrect password")
 }
