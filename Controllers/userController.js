@@ -32,13 +32,24 @@ exports.loginFunction = async (request, response) => {
         return response.send("Bad request")
     }
     
-    const result = await Users.findAll({ where: { email: request.body.email } });
+    const result = await Users.findOne({ where: { email: request.body.email } });
 
-    if (result != null && result.length > 0 && await bcrypt.compare(String(request.body.password), String(result.password))) { 
+    if (!result) {
+        response.status(404)
+        response.send("Account doesn't exist")
+    }
+
+    if (result) {
+    passwordValid = await bcrypt.compare(String(request.body.password), String(result.password))
+    
+    if (passwordValid) { 
         const token = jwt.sign({ id: result.id, email: result.email }, 'my-secret-key', { expiresIn: '10h' });
         response.status(200)
     return response.send(token)
     }
     response.status(404)
-    response.send("Incorrect password")
+    response.send("Wrong password")
+    }
 }
+
+
