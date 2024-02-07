@@ -1,5 +1,5 @@
-node_modules/
-connection.js/
+node_modules/ 
+utils/connection.js/
 itemModel.js/
 categoryModel.js/ 
 categoryController.js/
