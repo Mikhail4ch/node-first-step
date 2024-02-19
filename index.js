@@ -1,17 +1,22 @@
 const express = require('express')
 const app = express()
+const cors = require('cors');
+const corsOptions = require('./config/corsOptions.js');
 const cookieParser = require('cookie-parser');
 const port = 7070;
-const cors = require('cors')
 app.use(express.json());
+app.use(credentials);
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(cors());
+
 const fruitRoutes = require ('./Routes/fruitRoutes.js');
 const usersRoutes = require ('./Routes/usersRoutes.js');
 const categoryRoutes = require('./Routes/categoryRoutes');
 const itemRoutes = require('./Routes/itemRoutes');
 const refreshRoutes = require('./Routes/refreshRoutes.js');
-const { addNewItem } = require('./Controllers/itemController.js');
+const credentials = require('./midleware/credentials.js');
+
 
 
 app.use((request,response,next) => {
