@@ -46,9 +46,9 @@ exports.loginFunction = async (request, response) => {
             const accessToken = jwt.sign({ id: result.id, email: result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
             const refreshToken = jwt.sign({ id: result.id, email: result.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '5min' });
             response.status(200);
-            const otherUsers = Users.users.filter(person => person.email !== result.email);
+            const otherUsers = await Users.filter(person => person.email !== result.email);
             const currentUser = { ...result, refreshToken };
-            Users.setUsers([...otherUsers, currentUser]);
+            await Users.setUsers([...otherUsers, currentUser]);
             response.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
             response.json({ accessToken });
         }
