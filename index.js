@@ -12,7 +12,7 @@ const categoryRoutes = require('./Routes/categoryRoutes');
 const itemRoutes = require('./Routes/itemRoutes');
 const refreshRoutes = require('./Routes/refreshRoutes.js');
 const { addNewItem } = require('./Controllers/itemController.js');
-const cookieParser = require('cookie-parser');
+
 
 app.use((request,response,next) => {
     console.log('------------------------------------------')
