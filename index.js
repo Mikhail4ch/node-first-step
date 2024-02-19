@@ -1,14 +1,18 @@
 const express = require('express')
 const app = express()
+const cookieParser = require('cookie-parser');
 const port = 7070;
 const cors = require('cors')
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 const fruitRoutes = require ('./Routes/fruitRoutes.js');
 const usersRoutes = require ('./Routes/usersRoutes.js');
 const categoryRoutes = require('./Routes/categoryRoutes');
 const itemRoutes = require('./Routes/itemRoutes');
+const refreshRoutes = require('./Routes/refreshRoutes.js');
 const { addNewItem } = require('./Controllers/itemController.js');
+const cookieParser = require('cookie-parser');
 
 app.use((request,response,next) => {
     console.log('------------------------------------------')
@@ -74,6 +78,9 @@ app.use('/categories', categoryRoutes)
 
 // For Items
 app.use('/items', itemRoutes)
+
+// For refresh tokem
+.app.use ('/refresh', refreshRoutes)
 
 app.listen(port, () => {
     console.log(`App started and listening on port: ${port}`)
