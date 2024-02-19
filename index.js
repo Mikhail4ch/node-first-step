@@ -80,7 +80,7 @@ app.use('/categories', categoryRoutes)
 app.use('/items', itemRoutes)
 
 // For refresh tokem
-.app.use ('/refresh', refreshRoutes)
+app.use ('/refresh', refreshRoutes)
 
 app.listen(port, () => {
     console.log(`App started and listening on port: ${port}`)
