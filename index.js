@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions.js');
 const cookieParser = require('cookie-parser');
+const credentials = require('./midleware/credentials.js');
 const port = 7070;
 app.use(express.json());
 app.use(credentials);
@@ -15,7 +16,7 @@ const usersRoutes = require ('./Routes/usersRoutes.js');
 const categoryRoutes = require('./Routes/categoryRoutes');
 const itemRoutes = require('./Routes/itemRoutes');
 const refreshRoutes = require('./Routes/refreshRoutes.js');
-const credentials = require('./midleware/credentials.js');
+
 
 
 
