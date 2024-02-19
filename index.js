@@ -5,11 +5,10 @@ const corsOptions = require('./config/corsOptions.js');
 const cookieParser = require('cookie-parser');
 const credentials = require('./midleware/credentials.js');
 const port = 7070;
-app.use(express.json());
 app.use(credentials);
 app.use(cors(corsOptions));
+app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
 const fruitRoutes = require ('./Routes/fruitRoutes.js');
 const usersRoutes = require ('./Routes/usersRoutes.js');
