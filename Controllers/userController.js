@@ -46,9 +46,9 @@ exports.loginFunction = async (request, response) => {
             const accessToken = jwt.sign({ id: result.id, email: result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
             const refreshToken = jwt.sign({ id: result.id, email: result.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '5min' });
             response.status(200);
-            await Users.update({refreshToken: refreshToken}, {where: {email: request.body.email}})
-            response.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000});
-            response.json({accessToken});
+            await Users.update({ refreshToken: refreshToken })
+            response.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+            response.json({ accessToken });
         }
         response.status(404)
         response.send("Wrong password")
