@@ -24,7 +24,7 @@ exports.registerFunction = async (request, response) => {
         refreshToken: "not created yet"
     });
 
-    return response.status(200);
+    return response.send("Success");
 }
 
 exports.loginFunction = async (request, response) => {
