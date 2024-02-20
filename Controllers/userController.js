@@ -47,7 +47,7 @@ exports.loginFunction = async (request, response) => {
 
         if (passwordValid) {
             const accessToken = jwt.sign({ id: result.id, email: result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
-            const refreshToken = jwt.sign({ id: result.id, email: result.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '5min' });
+            const refreshToken = jwt.sign({ id: result.id, email: result.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
             response.status(200);
             await Users.update({ refreshToken:  refreshToken}, {where: { email: request.body.email } })
             response.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
