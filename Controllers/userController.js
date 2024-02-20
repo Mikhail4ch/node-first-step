@@ -18,13 +18,13 @@ exports.registerFunction = async (request, response) => {
 
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
 
-    response.status(200);
-
     const result = await Users.create({
         email: request.body.email,
         password: hashedPassword,
         refreshToken: "not created yet"
     });
+
+    return response.status(200);
 }
 
 exports.loginFunction = async (request, response) => {
