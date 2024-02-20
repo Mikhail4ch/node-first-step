@@ -23,7 +23,7 @@ exports.handleRefreshToken = (request, response) => {
             if (err || result.id !== decoded.id|| result.email !== decoded.email)
    return res.sendStatus (403);
       const accessToken = jwt.sign ({ id: result.id, email: result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
-      res.json({accessToken})
+      response.json({accessToken})
 }
    );
 }
