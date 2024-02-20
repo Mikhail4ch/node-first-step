@@ -54,5 +54,5 @@ exports.loginFunction = async (request, response) => {
         response.send("Wrong password")
     }
 }
-Users.update({ refreshToken: refreshToken }, { where: { id: itemId } })
+
 
