@@ -18,6 +18,8 @@ exports.registerFunction = async (request, response) => {
 
     const hashedPassword = await bcrypt.hash(request.body.password, 10);
 
+    response.status(200);
+
     const result = await Users.create({
         email: request.body.email,
         password: hashedPassword,
