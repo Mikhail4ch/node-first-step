@@ -20,7 +20,8 @@ exports.registerFunction = async (request, response) => {
 
     const result = await Users.create({
         email: request.body.email,
-        password: hashedPassword
+        password: hashedPassword,
+        refreshToken: "not created yet"
     });
 }
 
