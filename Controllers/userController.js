@@ -46,8 +46,8 @@ exports.loginFunction = async (request, response) => {
         passwordValid = await bcrypt.compare(String(request.body.password), String(result.password))
 
         if (passwordValid) {
-            const accessToken = jwt.sign({ id: result.id, email: result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
-            const refreshToken = jwt.sign({ id: result.id, email: result.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+            const accessToken = jwt.sign({ "id": result.id, "email": result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
+            const refreshToken = jwt.sign({ "id": result.id, "email": result.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
             await Users.update({ refreshToken:  refreshToken}, {where: { email: request.body.email } })
             response.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
             response.json({ accessToken });
