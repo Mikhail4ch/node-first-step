@@ -20,7 +20,7 @@ exports.handleRefreshToken = (request, response) => {
    jwt.verify (
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
-    (error, decoded) => {
+    (error, decoded) => { console.log (decoded)
             if (error || result.id !== decoded.id || result.email !== decoded.email)
    return response.sendStatus (400);
       const accessToken = jwt.sign ({ "id": decoded.id, "email": decoded.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
