@@ -4,27 +4,28 @@ require('dotenv').config()
 
 exports.handleRefreshToken = async (request, response) => {
 
-    const cookies = request.cookies 
+    const cookies = request.cookies
 
     if (!cookies?.jwt) return send.Status(401);
-    
-    console.log (cookies.jwt);
+
+    console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
 
     const result = await Users.findOne({ where: { refreshToken: refreshToken } });
 
     if (!result) return
-     response.status(404)
-    
+    response.status(404)
 
-   jwt.verify (
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET,
-    (error, decoded) => { console.log (decoded); console.log (result);
+
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (error, decoded) => {
+            console.log(decoded); console.log(result);
             if (error || result.id !== decoded.id || result.email !== decoded.email)
-   return response.sendStatus (400);
-      const accessToken = jwt.sign ({ "id": decoded.id, "email": decoded.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
-      response.json({accessToken}); return response.status (200)
-}
-   );
+                return response.sendStatus(400);
+            const accessToken = jwt.sign({ "id": decoded.id, "email": decoded.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
+            return response.json({ accessToken })
+        }
+    );
 }
