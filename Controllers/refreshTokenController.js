@@ -14,7 +14,7 @@ exports.handleRefreshToken = async (request, response) => {
     const result = await Users.findOne({ where: { refreshToken: refreshToken } });
 
     if (!result) return
-     response.status(403)
+     response.status(404)
     
 
    jwt.verify (
