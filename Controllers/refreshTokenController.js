@@ -11,7 +11,7 @@ exports.handleRefreshToken = (request, response) => {
     console.log (cookies.jwt);
     const refreshToken = cookies.jwt;
 
-    const result = Users.find({ where: { refreshToken: refreshToken } });
+    const result = Users.findOne({ where: { refreshToken: refreshToken } });
 
     if (!result) return
      response.status(403)
