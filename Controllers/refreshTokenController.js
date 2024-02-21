@@ -13,7 +13,7 @@ exports.handleRefreshToken = (request, response) => {
     const result = Users.findOne({ where: { refreshToken: refreshToken } });
 
     if (!result) return
-     res.status(403)
+     response.status(403)
     
 
    jwt.verify (
