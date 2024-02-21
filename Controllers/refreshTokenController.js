@@ -14,7 +14,7 @@ exports.handleRefreshToken = (request, response) => {
     const result = Users.findOne({ where: { refreshToken: refreshToken } });
 
     if (!result) return
-     response.status(403)
+     response.status(402)
     
 
    jwt.verify (
@@ -23,7 +23,7 @@ exports.handleRefreshToken = (request, response) => {
     (err, decoded) => {
             if (err || result.id !== decoded.id|| result.email !== decoded.email)
    return response.sendStatus (403);
-      const accessToken = jwt.sign ({ id: result.id, email: result.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
+      const accessToken = jwt.sign ({ "id": decoded.id, "email": decoded.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
       response.json({accessToken})
 }
    );
