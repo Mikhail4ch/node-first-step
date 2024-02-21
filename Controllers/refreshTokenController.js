@@ -21,7 +21,7 @@ exports.handleRefreshToken = (request, response) => {
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     (err, decoded) => {
-            if (err || result.id !== decoded.id|| result.email !== decoded.email)
+            if (err || result.id !== decoded.id || result.email !== decoded.email)
    return response.sendStatus (400);
       const accessToken = jwt.sign ({ "id": decoded.id, "email": decoded.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
       response.json({accessToken})
