@@ -25,7 +25,7 @@ exports.handleRefreshToken = async (request, response) => {
             if (error || result.id !== decoded.id || result.email !== decoded.email)
                 return response.sendStatus(400);
             const accessToken = jwt.sign({ "id": decoded.id, "email": decoded.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '100s' });
-            return response.json({ accessToken })
+            console.log(accessToken); response.json({ accessToken }); return response.status(200)
         }
     );
 }
