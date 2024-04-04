@@ -90,3 +90,11 @@ app.use ('/refresh', refreshRoutes)
 app.listen(port, () => {
     console.log(`App started and listening on port: ${port}`)
 });
+
+// Continious integration 
+
+const removeEvenNumber = require('./modules/remove-even-numbers');
+
+const answer = removeEvenNumber([1,2,3,4,5,6,7,8,9,10]);
+
+console.log(answer);
