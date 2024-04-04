@@ -36,7 +36,7 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - uses: everlytic/branch-merge@1.1.2  
-       with:
+      with:
           source: main  
           destination: stage 
     
