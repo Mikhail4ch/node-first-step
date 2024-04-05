@@ -38,15 +38,16 @@ jobs:
       matrix:
         node-version: [14.x, 16.x, 18.x] 
     
-    steps:
-      - name: Branch Merge
-      - uses: actions/checkout@v3
+  merge-branch:
+     runs-on: ubuntu-latest
+     steps:
+      - uses: actions/checkout@v2
       - uses: everlytic/branch-merge@1.1.5
         with:
           github_token: ${{ github.token }}
           source_ref: 'main'
           target_branch: 'stage'
-          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'    
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'   
     
     
     
