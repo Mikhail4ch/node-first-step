@@ -40,10 +40,13 @@ jobs:
     
     steps:
       - name: Branch Merge
-        uses: everlytic/branch-merge@1.1.5
+      - uses: actions/checkout@v3
+      - uses: everlytic/branch-merge@1.1.5
         with:
-          source: main  
-          destination: stage     
+          github_token: ${{ github.token }}
+          source_ref: 'main'
+          target_branch: 'stage'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'    
     
     
     
