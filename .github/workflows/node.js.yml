@@ -38,9 +38,8 @@ jobs:
       matrix:
         node-version: [14.x, 16.x, 18.x] 
     
-  merge-branch:
-     runs-on: ubuntu-latest
-     steps:
+  
+    steps:
       - uses: actions/checkout@v2
       - uses: everlytic/branch-merge@1.1.5
         with:
