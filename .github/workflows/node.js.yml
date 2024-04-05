@@ -39,7 +39,8 @@ jobs:
         node-version: [14.x, 16.x, 18.x] 
     
     steps:
-      - uses: everlytic/branch-merge@1.1.2 
+      - name: Branch Merge
+        uses: everlytic/branch-merge@1.1.5
         with:
           source: main  
           destination: stage     
