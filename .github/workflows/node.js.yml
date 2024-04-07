@@ -33,7 +33,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{[needs.build](http://needs.build).result == 'success'}}
+    if: ${{ [ needs.build ](http://needs.build).result == 'success'}}
 
     steps:
      - uses: actions/checkout@v3
