@@ -37,7 +37,7 @@ jobs:
 
     steps:
      - uses: actions/checkout@v3
-     - uses: everlytic/branch-merge@1.1.5
+     - uses: everlytic/branch-merge@1.1.3
        with:
          github_token: ${{ secrets.GITHUB_TOKEN }}
          source_ref: ${{ github.ref }}
