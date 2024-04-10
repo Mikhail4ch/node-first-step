@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-   branches: [ "main" ]
+   branches: [ "development" ]
   pull_request:
-   branches: [ "main" ]
+   branches: [ "development" ]
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
        with:
          github_token: ${{ secrets.GITHUB_TOKEN }}
          source_ref: ${{ github.ref }}
-         target_branch: 'stage'
+         target_branch: 'production'
          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'  
     
     
