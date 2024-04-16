@@ -1,0 +1,43 @@
+#This workflow is intended ot be a CI program functioning on the backend-part of the development program
+
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            node-version: [14.x, 16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js ${{ matrix.node-version}}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version}}
+    
+    - name: Install Dependencies
+      run: npm install
+    
+    - name: Run Tests
+      run: npm test
+
+    - name: Run Eslint
+      run: npm run lint
+      
+    - name: Run Test with Coverage
+      run: npm test -- --coverage
+
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
