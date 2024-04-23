@@ -45,26 +45,3 @@ jobs:
       - name: Set success flag
         id: set-success-flag
         run: echo "::set-output name=success::true"
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: ${{ needs.build.result == 'success' }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy built artifacts
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git fetch origin deploy:${{ github.sha }}
-          git checkout deploy
-          git merge ${{ github.sha }}
-          git push --quiet origin deploy  # Push changes to the 'deploy' branch
-
-      - name: Clean up
-        run: |
-          git checkout development
-          git branch -D deploy  # Delete the 'deploy' branch after deployment
