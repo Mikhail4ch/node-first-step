@@ -1,6 +1,6 @@
 # This workflow will automate the process of building and testing Node.js projects, and deploys the project to GitHub  upon successful completion of the tests
 
-name: Node.js CI/CD
+name: Backend CI
 
 on:
   push:
@@ -16,12 +16,12 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
-
-    steps:
+        
+    steps: 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -30,18 +30,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build application
-        run: npm run build
+      - name: Run tests
+        run: npm test
 
-      - name: Commit built artifacts
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git checkout -b deploy  # Create or switch to a 'deploy' branch
-          git add .  # Add all changes (including built artifacts)
-          git commit -m "Deploy latest build from GitHub Actions"
-          git push --quiet --set-upstream origin deploy  # Push changes to the 'deploy' branch
+      - name: Set Success Output
+        if: success()
+        run: echo "success=true" >> $GITHUB_ENV
 
-      - name: Set success flag
-        id: set-success-flag
-        run: echo "::set-output name=success::true"
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ needs.build.result == 'success' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge to Production
+        uses: everlytic/branch-merge@1.1.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_ref: ${{ github.ref }}
+          target_branch: 'production'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
